@@ -770,37 +770,58 @@
         <p style="margin-top: 4px;">Questions? Reach out via the form above or email the study team directly.</p>  
     </footer>
 
-    <script>  
-        const form = document.getElementById('interest-form');  
-        const submitBtn = document.getElementById('submit-btn');  
-        const successMessage = document.getElementById('success-message');
+ <script>  
+    const form = document.getElementById('interest-form');  
+    const submitBtn = document.getElementById('submit-btn');  
+    const successMessage = document.getElementById('success-message');
 
-        form.addEventListener('submit', async function(e) {  
-            e.preventDefault();  
-            submitBtn.disabled = true;  
-            submitBtn.textContent = 'Submitting...';
+    form.addEventListener('submit', async function(e) {  
+        e.preventDefault();  
+        submitBtn.disabled = true;  
+        submitBtn.textContent = 'Submitting...';
 
-            try {  
-                const response = await fetch(form.action, {  
-                    method: 'POST',  
-                    body: new FormData(form),  
-                    headers: { 'Accept': 'application/json' }  
-                });
+        // Collect form data as a plain object  
+        const data = {  
+            name: form.name.value,  
+            email: form.email.value,  
+            institution: form.institution.value,  
+            role: form.role.value,  
+            dv5_access: form.dv5_access.value,  
+            myintuitive_access: form.myintuitive_access.value,  
+            contact_method: form.contact_method.value,  
+            notes: form.notes.value  
+        };
 
-                if (response.ok) {  
-                    form.style.display = 'none';  
-                    successMessage.classList.add('show');  
-                    document.getElementById('form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });  
-                } else {  
-                    throw new Error('Submission failed');  
-                }  
-            } catch (error) {  
+        try {  
+            const response = await fetch(form.action, {  
+                method: 'POST',  
+                headers: {  
+                    'Content-Type': 'application/json',  
+                    'Accept': 'application/json'  
+                },  
+                body: JSON.stringify(data)  
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {  
+                form.style.display = 'none';  
+                successMessage.classList.add('show');  
+                document.getElementById('form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });  
+            } else {  
+                console.error('Formspree responded with:', response.status, result);  
+                alert('Formspree error: ' + (result.error || result.errors?.map(e => e.message).join(', ') || 'Unknown error. Status: ' + response.status));  
                 submitBtn.disabled = false;  
                 submitBtn.textContent = 'Submit Interest';  
-                alert('Something went wrong. Please try again or contact the study team directly.');  
             }  
-        });  
-    </script>
+        } catch (error) {  
+            console.error('Network/fetch error:', error);  
+            alert('Network error: ' + error.message);  
+            submitBtn.disabled = false;  
+            submitBtn.textContent = 'Submit Interest';  
+        }  
+    });  
+</script>  
 
 </body>  
 </html>  
