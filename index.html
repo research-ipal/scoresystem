@@ -331,6 +331,200 @@
             margin-right: 3px;  
         }
 
+        /* Tutorial CTA button */  
+        .tutorial-cta {  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            gap: 10px;  
+            background: #f0f5fc;  
+            border: 1.5px dashed var(--primary);  
+            border-radius: 10px;  
+            padding: 18px 24px;  
+            margin-top: 8px;  
+            cursor: pointer;  
+            transition: background 0.2s, border-color 0.2s;  
+            text-decoration: none;  
+        }
+
+        .tutorial-cta:hover {  
+            background: #e6eef8;  
+            border-color: var(--primary-dark);  
+        }
+
+        .tutorial-cta .cta-icon {  
+            font-size: 1.3rem;  
+        }
+
+        .tutorial-cta .cta-text {  
+            font-size: 0.95rem;  
+            font-weight: 600;  
+            color: var(--primary-dark);  
+        }
+
+        .tutorial-cta .cta-arrow {  
+            font-size: 1rem;  
+            color: var(--primary);  
+        }
+
+        /* Modal overlay */  
+        .modal-overlay {  
+            display: none;  
+            position: fixed;  
+            top: 0;  
+            left: 0;  
+            width: 100%;  
+            height: 100%;  
+            background: rgba(30, 50, 70, 0.45);  
+            backdrop-filter: blur(4px);  
+            z-index: 1000;  
+            justify-content: center;  
+            align-items: flex-start;  
+            padding: 40px 20px;  
+            overflow-y: auto;  
+        }
+
+        .modal-overlay.show {  
+            display: flex;  
+        }
+
+        .modal {  
+            background: #fff;  
+            border-radius: 16px;  
+            max-width: 680px;  
+            width: 100%;  
+            padding: 40px 44px;  
+            position: relative;  
+            animation: modalIn 0.3s ease;  
+            margin: auto;  
+        }
+
+        @keyframes modalIn {  
+            from { opacity: 0; transform: translateY(20px) scale(0.97); }  
+            to { opacity: 1; transform: translateY(0) scale(1); }  
+        }
+
+        .modal-close {  
+            position: absolute;  
+            top: 16px;  
+            right: 20px;  
+            width: 32px;  
+            height: 32px;  
+            border: none;  
+            background: #f0f3f8;  
+            border-radius: 8px;  
+            cursor: pointer;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            transition: background 0.2s;  
+        }
+
+        .modal-close:hover {  
+            background: #e0e6ee;  
+        }
+
+        .modal-close svg {  
+            width: 16px;  
+            height: 16px;  
+            stroke: var(--text-light);  
+            stroke-width: 2.5;  
+            fill: none;  
+        }
+
+        .modal h2 {  
+            font-size: 1.35rem;  
+            font-weight: 600;  
+            color: #2e4a66;  
+            margin-bottom: 28px;  
+        }
+
+        .step {  
+            margin-bottom: 28px;  
+            padding-bottom: 28px;  
+            border-bottom: 1px solid var(--border-light);  
+        }
+
+        .step:last-child {  
+            margin-bottom: 0;  
+            padding-bottom: 0;  
+            border-bottom: none;  
+        }
+
+        .step-header {  
+            display: flex;  
+            align-items: center;  
+            gap: 10px;  
+            margin-bottom: 10px;  
+        }
+
+        .step-number {  
+            width: 28px;  
+            height: 28px;  
+            background: var(--primary);  
+            color: #fff;  
+            border-radius: 50%;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            font-size: 0.8rem;  
+            font-weight: 700;  
+            flex-shrink: 0;  
+        }
+
+        .step-number.success-step {  
+            background: var(--success);  
+        }
+
+        .step-title {  
+            font-size: 0.95rem;  
+            font-weight: 600;  
+            color: #2e4a66;  
+        }
+
+        .step p {  
+            font-size: 0.9rem;  
+            color: var(--text-light);  
+            margin: 0 0 14px 0;  
+            padding-left: 38px;  
+            line-height: 1.6;  
+        }
+
+        .step p a {  
+            color: var(--primary-dark);  
+            text-decoration: underline;  
+            text-underline-offset: 2px;  
+        }
+
+        .step p a:hover {  
+            color: var(--primary-deeper);  
+        }
+
+        .step-images {  
+            padding-left: 38px;  
+            display: flex;  
+            flex-direction: column;  
+            gap: 10px;  
+        }
+
+        .step-images img {  
+            width: 100%;  
+            border-radius: 8px;  
+            border: 1px solid var(--border);  
+            display: block;  
+        }
+
+        .step-success {  
+            padding-left: 38px;  
+        }
+
+        .step-success p {  
+            padding-left: 0;  
+            color: #3a6a58;  
+            font-weight: 500;  
+        }
+
+        /* Form */  
         .form-card {  
             background: var(--card-bg);  
             border: 1px solid var(--primary);  
@@ -485,7 +679,6 @@
             margin: 0 auto;  
         }
 
-        /* Error banner */  
         .error-banner {  
             display: none;  
             background: #fef2f2;  
@@ -523,6 +716,16 @@
 
             .card, .form-card {  
                 padding: 28px 22px;  
+            }
+
+            .modal {  
+                padding: 28px 22px;  
+            }
+
+            .step p,  
+            .step-images,  
+            .step-success {  
+                padding-left: 0;  
             }
 
             .pillars-grid,  
@@ -658,13 +861,11 @@
             </div>  
         </div>
 
+        <!-- Section 4 — Tutorial -->  
         <div class="section">  
             <div class="card">  
                 <div class="section-label">Section 4</div>  
-                <h2>What Data You Would Share</h2>  
-                <p>  
-                    We will provide a <strong>step-by-step tutorial</strong> to export the needed dataset from <strong>MyIntuitive</strong>.  
-                </p>
+                <h2>What Data You Would Share</h2>
 
                 <div class="data-highlight">  
                     <div class="data-box source">  
@@ -679,10 +880,17 @@
                             <li>MRNs, names, or DOBs</li>  
                         </ul>  
                     </div>  
+                </div>
+
+                <div class="tutorial-cta" id="open-tutorial" role="button" tabindex="0">  
+                    <span class="cta-icon">📖</span>  
+                    <span class="cta-text">Click here for a full tutorial on how to download your data from MyIntuitive</span>  
+                    <span class="cta-arrow">→</span>  
                 </div>  
             </div>  
         </div>
 
+        <!-- Section 5: Form -->  
         <div class="section">  
             <div class="form-card" id="form-card">  
                 <div class="section-label">Section 5</div>  
@@ -771,12 +979,127 @@
         <p style="margin-top: 4px;">Questions? Reach out via the form above or email the study team directly.</p>  
     </footer>
 
+    <!-- Tutorial Modal -->  
+    <div class="modal-overlay" id="tutorial-modal">  
+        <div class="modal">  
+            <button class="modal-close" id="close-tutorial" aria-label="Close tutorial">  
+                <svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>  
+            </button>
+
+            <h2>📖 How to Download Your Data</h2>
+
+            <div class="step">  
+                <div class="step-header">  
+                    <span class="step-number">1</span>  
+                    <span class="step-title">Log in to MyIntuitive</span>  
+                </div>  
+                <p>Access <a href="https://my.intuitive.com/" target="_blank" rel="noopener">https://my.intuitive.com/</a> and log in with your credentials.</p>  
+            </div>
+
+            <div class="step">  
+                <div class="step-header">  
+                    <span class="step-number">2</span>  
+                    <span class="step-title">Navigate to Case History</span>  
+                </div>  
+                <p>Go to <strong>"Reports"</strong>, and then to <strong>"Case History"</strong>.</p>  
+                <div class="step-images">  
+                    <img src="images/screenshot_1.png" alt="Screenshot showing Reports and Case History navigation">  
+                </div>  
+            </div>
+
+            <div class="step">  
+                <div class="step-header">  
+                    <span class="step-number">3</span>  
+                    <span class="step-title">Download Case Data</span>  
+                </div>  
+                <p>At the top right corner, click on the <strong>"Download case data"</strong> button.</p>  
+                <div class="step-images">  
+                    <img src="images/screenshot_2.png" alt="Screenshot showing Download case data button">  
+                </div>  
+            </div>
+
+            <div class="step">  
+                <div class="step-header">  
+                    <span class="step-number">4</span>  
+                    <span class="step-title">Go to Insights Engine</span>  
+                </div>  
+                <p>Nice! You got the first file! Now let's get the other one. At the left menu, click on <strong>"Insights Engine"</strong>.</p>  
+                <div class="step-images">  
+                    <img src="images/screenshot_3.png" alt="Screenshot showing Insights Engine in left menu">  
+                </div>  
+            </div>
+
+            <div class="step">  
+                <div class="step-header">  
+                    <span class="step-number">5</span>  
+                    <span class="step-title">Download All Data</span>  
+                </div>  
+                <p>Click on <strong>"Create a study"</strong>, and then click <strong>"Download All Data"</strong>.</p>  
+                <div class="step-images">  
+                    <img src="images/screenshot_4.png" alt="Screenshot showing Create a study option">  
+                    <img src="images/screenshot_5.png" alt="Screenshot showing Download All Data button">  
+                </div>  
+            </div>
+
+            <div class="step">  
+                <div class="step-header">  
+                    <span class="step-number success-step">✓</span>  
+                    <span class="step-title">Success!</span>  
+                </div>  
+                <div class="step-success">  
+                    <p>You have both files needed for calculating your scores. The research team will instruct you on how to send them securely.</p>  
+                </div>  
+            </div>  
+        </div>  
+    </div>
+
     <script>  
         // =============================================  
-        // PUT YOUR FORMSPREE ENDPOINT HERE  
+        // FORMSPREE ENDPOINT  
         // =============================================  
         const FORMSPREE_URL = 'https://formspree.io/f/xdayvvdl';
 
+        // =============================================  
+        // TUTORIAL MODAL  
+        // =============================================  
+        const tutorialBtn = document.getElementById('open-tutorial');  
+        const tutorialModal = document.getElementById('tutorial-modal');  
+        const closeBtn = document.getElementById('close-tutorial');
+
+        tutorialBtn.addEventListener('click', function() {  
+            tutorialModal.classList.add('show');  
+            document.body.style.overflow = 'hidden';  
+        });
+
+        tutorialBtn.addEventListener('keydown', function(e) {  
+            if (e.key === 'Enter' || e.key === ' ') {  
+                e.preventDefault();  
+                tutorialBtn.click();  
+            }  
+        });
+
+        closeBtn.addEventListener('click', function() {  
+            tutorialModal.classList.remove('show');  
+            document.body.style.overflow = '';  
+        });
+
+        tutorialModal.addEventListener('click', function(e) {  
+            if (e.target === tutorialModal) {  
+                tutorialModal.classList.remove('show');  
+                document.body.style.overflow = '';  
+            }  
+        });
+
+        document.addEventListener('keydown', function(e) {  
+            if (e.key === 'Escape' && tutorialModal.classList.contains('show')) {  
+                tutorialModal.classList.remove('show');  
+                document.body.style.overflow = '';  
+            }  
+        });
+
+        // =============================================  
+        // FORM SUBMISSION  
+        // =============================================  
         const form = document.getElementById('interest-form');  
         const submitBtn = document.getElementById('submit-btn');  
         const successMessage = document.getElementById('success-message');  
@@ -844,11 +1167,11 @@
                         || (result.errors && result.errors.map(e => e.message || e.code).join(', '))  
                         || 'Formspree returned status ' + response.status;  
                     console.error('Formspree error:', errMsg);  
-                    showError('Formspree error: ' + errMsg);  
+                    showError('Submission error: ' + errMsg);  
                 }  
             } catch (networkErr) {  
                 console.error('Network error:', networkErr);  
-                showError('Network error: ' + networkErr.message + '. Are you opening this file locally? It must be served from a web server (GitHub Pages, etc).');  
+                showError('Network error: ' + networkErr.message + '. Make sure this page is served from a web server (GitHub Pages), not opened as a local file.');  
             }  
         });  
     </script>
