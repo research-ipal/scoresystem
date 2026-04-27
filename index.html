@@ -1180,7 +1180,7 @@
                         || (result.errors && result.errors.map(e => e.message || e.code).join(', '))  
                         || 'Formspree returned status ' + response.status;  
                     console.error('Formspree error:', errMsg);  
-                    showError('Submission error: ' + errMsg);  
+                    showError('Submission error: ' + JSON.stringify(result));  
                 }  
             } catch (networkErr) {  
                 console.error('Network error:', networkErr);  
