@@ -1123,17 +1123,30 @@
             submitBtn.disabled = true;  
             submitBtn.textContent = 'Submitting...';
 
-            const data = {  
-                name: document.getElementById('name').value,  
-                email: document.getElementById('email').value,  
-                institution: document.getElementById('institution').value,  
-                role: document.getElementById('role').value || '(not provided)',  
-                dv5_access: document.getElementById('dv5_access').value,  
-                myintuitive_access: document.getElementById('myintuitive_access').value,  
-                contact_method: document.getElementById('contact_method').value || '(not provided)',  
-                notes: document.getElementById('notes').value || '(none)'  
-            };
-
+            // Build data object, only include fields that have values  
+            const data = {};
+            
+            const name = document.getElementById('name').value.trim();  
+            const email = document.getElementById('email').value.trim();  
+            const institution = document.getElementById('institution').value.trim();  
+            const role = document.getElementById('role').value.trim();  
+            const dv5 = document.getElementById('dv5_access').value;  
+            const myint = document.getElementById('myintuitive_access').value;  
+            const contact = document.getElementById('contact_method').value;  
+            const notes = document.getElementById('notes').value.trim();
+            
+            if (name) data.name = name;  
+            if (email) data.email = email;  
+            if (institution) data.institution = institution;  
+            if (role) data.role = role;  
+            if (dv5) data.dv5_access = dv5;  
+            if (myint) data.myintuitive_access = myint;  
+            if (contact) data.contact_method = contact;  
+            if (notes) data.notes = notes;
+            
+            // Formspree requires _replyto or email  
+            data._replyto = email;  
+            
             console.log('Submitting to:', FORMSPREE_URL);  
             console.log('Data:', data);
 
