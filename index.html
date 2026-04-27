@@ -36,7 +36,6 @@
             -webkit-font-smoothing: antialiased;  
         }
 
-        /* Hero */  
         .hero {  
             background: linear-gradient(160deg, #dce8f5 0%, #c8daf0 40%, #b8cfe8 100%);  
             padding: 72px 24px 56px;  
@@ -98,14 +97,12 @@
             color: #2e4a66;  
         }
 
-        /* Container */  
         .container {  
             max-width: 780px;  
             margin: 0 auto;  
             padding: 0 24px;  
         }
 
-        /* Sections */  
         .section {  
             margin: 40px auto;  
         }
@@ -144,7 +141,6 @@
             color: var(--text);  
         }
 
-        /* Pillars */  
         .pillars-grid {  
             display: grid;  
             grid-template-columns: repeat(3, 1fr);  
@@ -178,7 +174,6 @@
             line-height: 1.45;  
         }
 
-        /* Domain Tags */  
         .domain-tags {  
             display: flex;  
             flex-wrap: wrap;  
@@ -196,7 +191,6 @@
             color: var(--primary-dark);  
         }
 
-        /* Checklist */  
         .checklist {  
             list-style: none;  
             padding: 0;  
@@ -236,7 +230,6 @@
             fill: none;  
         }
 
-        /* Benefits */  
         .benefits-grid {  
             display: grid;  
             grid-template-columns: repeat(2, 1fr);  
@@ -281,7 +274,6 @@
             line-height: 1.55;  
         }
 
-        /* Data Section */  
         .data-highlight {  
             display: grid;  
             grid-template-columns: 1fr 1fr;  
@@ -339,7 +331,6 @@
             margin-right: 3px;  
         }
 
-        /* Form */  
         .form-card {  
             background: var(--card-bg);  
             border: 1px solid var(--primary);  
@@ -445,7 +436,6 @@
             transform: none;  
         }
 
-        /* Success */  
         .success-message {  
             display: none;  
             text-align: center;  
@@ -495,7 +485,24 @@
             margin: 0 auto;  
         }
 
-        /* Footer */  
+        /* Error banner */  
+        .error-banner {  
+            display: none;  
+            background: #fef2f2;  
+            border: 1px solid #fecaca;  
+            border-radius: 8px;  
+            padding: 14px 18px;  
+            margin-top: 16px;  
+            font-size: 0.88rem;  
+            color: #991b1b;  
+            line-height: 1.5;  
+            grid-column: 1 / -1;  
+        }
+
+        .error-banner.show {  
+            display: block;  
+        }
+
         footer {  
             text-align: center;  
             padding: 40px 24px 28px;  
@@ -505,7 +512,6 @@
             margin-top: 20px;  
         }
 
-        /* Responsive */  
         @media (max-width: 700px) {  
             .hero {  
                 padding: 52px 20px 44px;  
@@ -545,7 +551,6 @@
 
     <div class="container">
 
-        <!-- Section 1 -->  
         <div class="section">  
             <div class="card">  
                 <div class="section-label">Section 1</div>  
@@ -589,7 +594,6 @@
             </div>  
         </div>
 
-        <!-- Section 2 -->  
         <div class="section">  
             <div class="card">  
                 <div class="section-label">Section 2</div>  
@@ -619,7 +623,6 @@
             </div>  
         </div>
 
-        <!-- Section 3 -->  
         <div class="section">  
             <div class="card">  
                 <div class="section-label">Section 3</div>  
@@ -655,7 +658,6 @@
             </div>  
         </div>
 
-        <!-- Section 4 -->  
         <div class="section">  
             <div class="card">  
                 <div class="section-label">Section 4</div>  
@@ -681,14 +683,13 @@
             </div>  
         </div>
 
-        <!-- Section 5: Form -->  
         <div class="section">  
             <div class="form-card" id="form-card">  
                 <div class="section-label">Section 5</div>  
                 <h2>Interested in Participating?</h2>  
                 <p>Fill this out and we'll email you the next steps along with the MyIntuitive export tutorial.</p>
 
-                <form id="interest-form" action="https://formspree.io/f/xdayvvdl" method="POST">  
+                <form id="interest-form">  
                     <div class="form-grid">
 
                         <div class="form-group">  
@@ -740,14 +741,14 @@
                             </select>  
                         </div>
 
-                        <div class="form-group">  
-                            <!-- spacer -->  
-                        </div>
+                        <div class="form-group"></div>
 
                         <div class="form-group full-width">  
                             <label for="notes">Anything we should know? <span class="optional">(optional)</span></label>  
                             <textarea id="notes" name="notes" placeholder="Questions, comments, or anything relevant..."></textarea>  
                         </div>
+
+                        <div class="error-banner" id="error-banner"></div>
 
                         <button type="submit" class="submit-btn" id="submit-btn">Submit Interest</button>  
                     </div>  
@@ -770,58 +771,87 @@
         <p style="margin-top: 4px;">Questions? Reach out via the form above or email the study team directly.</p>  
     </footer>
 
- <script>  
-    const form = document.getElementById('interest-form');  
-    const submitBtn = document.getElementById('submit-btn');  
-    const successMessage = document.getElementById('success-message');
+    <script>  
+        // =============================================  
+        // PUT YOUR FORMSPREE ENDPOINT HERE  
+        // =============================================  
+        const FORMSPREE_URL = 'https://formspree.io/f/xdayvvdl';
 
-    form.addEventListener('submit', async function(e) {  
-        e.preventDefault();  
-        submitBtn.disabled = true;  
-        submitBtn.textContent = 'Submitting...';
+        const form = document.getElementById('interest-form');  
+        const submitBtn = document.getElementById('submit-btn');  
+        const successMessage = document.getElementById('success-message');  
+        const errorBanner = document.getElementById('error-banner');
 
-        // Collect form data as a plain object  
-        const data = {  
-            name: form.name.value,  
-            email: form.email.value,  
-            institution: form.institution.value,  
-            role: form.role.value,  
-            dv5_access: form.dv5_access.value,  
-            myintuitive_access: form.myintuitive_access.value,  
-            contact_method: form.contact_method.value,  
-            notes: form.notes.value  
-        };
-
-        try {  
-            const response = await fetch(form.action, {  
-                method: 'POST',  
-                headers: {  
-                    'Content-Type': 'application/json',  
-                    'Accept': 'application/json'  
-                },  
-                body: JSON.stringify(data)  
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {  
-                form.style.display = 'none';  
-                successMessage.classList.add('show');  
-                document.getElementById('form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });  
-            } else {  
-                console.error('Formspree responded with:', response.status, result);  
-                alert('Formspree error: ' + (result.error || result.errors?.map(e => e.message).join(', ') || 'Unknown error. Status: ' + response.status));  
-                submitBtn.disabled = false;  
-                submitBtn.textContent = 'Submit Interest';  
-            }  
-        } catch (error) {  
-            console.error('Network/fetch error:', error);  
-            alert('Network error: ' + error.message);  
+        function showError(msg) {  
+            errorBanner.textContent = msg;  
+            errorBanner.classList.add('show');  
             submitBtn.disabled = false;  
             submitBtn.textContent = 'Submit Interest';  
-        }  
-    });  
-</script>  
+        }
+
+        function hideError() {  
+            errorBanner.classList.remove('show');  
+            errorBanner.textContent = '';  
+        }
+
+        form.addEventListener('submit', async function(e) {  
+            e.preventDefault();  
+            hideError();  
+            submitBtn.disabled = true;  
+            submitBtn.textContent = 'Submitting...';
+
+            const data = {  
+                name: document.getElementById('name').value,  
+                email: document.getElementById('email').value,  
+                institution: document.getElementById('institution').value,  
+                role: document.getElementById('role').value || '(not provided)',  
+                dv5_access: document.getElementById('dv5_access').value,  
+                myintuitive_access: document.getElementById('myintuitive_access').value,  
+                contact_method: document.getElementById('contact_method').value || '(not provided)',  
+                notes: document.getElementById('notes').value || '(none)'  
+            };
+
+            console.log('Submitting to:', FORMSPREE_URL);  
+            console.log('Data:', data);
+
+            try {  
+                const response = await fetch(FORMSPREE_URL, {  
+                    method: 'POST',  
+                    headers: {  
+                        'Content-Type': 'application/json',  
+                        'Accept': 'application/json'  
+                    },  
+                    body: JSON.stringify(data)  
+                });
+
+                console.log('Response status:', response.status);
+
+                let result;  
+                try {  
+                    result = await response.json();  
+                    console.log('Response body:', result);  
+                } catch (parseErr) {  
+                    console.log('Could not parse response as JSON');  
+                    result = {};  
+                }
+
+                if (response.ok) {  
+                    form.style.display = 'none';  
+                    successMessage.classList.add('show');  
+                    document.getElementById('form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });  
+                } else {  
+                    const errMsg = result.error  
+                        || (result.errors && result.errors.map(e => e.message || e.code).join(', '))  
+                        || 'Formspree returned status ' + response.status;  
+                    console.error('Formspree error:', errMsg);  
+                    showError('Formspree error: ' + errMsg);  
+                }  
+            } catch (networkErr) {  
+                console.error('Network error:', networkErr);  
+                showError('Network error: ' + networkErr.message + '. Are you opening this file locally? It must be served from a web server (GitHub Pages, etc).');  
+            }  
+        });  
+    </script>
 
 </body>  
 </html>  
